@@ -1,0 +1,176 @@
+// Creo la base de datos
+db ecommerce
+
+// Creo 2 colecciones (mensajes y productos)
+db.createCollection("mensajes")
+db.createCollection("productos")
+
+// Agrego 10 documentos con valores distintos a las colecciones mensajes y productos. El formato de los documentos debe estar en correspondencia con el que venimos utilizando en el entregable con bade de datos MariaDB
+
+db.productos.insertMany([
+    {
+    "title": "Auriculares in-ear gamer inalámbricos Haylou GT Series GT1 negro",
+    "price" : 3800,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_749481-MLA40812448226_022020-F.webp",
+    "id": 1
+    },
+    {
+    "title": "AAuriculares in-ear gamer inalámbricos Haylou GT Series GT1 Pro negro",
+    "price" : 3200,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_825073-MLA40760731794_022020-F.webp",
+    "id": 2
+    },
+    {
+    "title": "Auriculares in-ear inalámbricos Haylou GT1 XR negro",
+    "price" : 4900,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_895993-MLA45883000698_052021-F.webp",
+    "id": 3
+    },
+    {
+    "title": "Auriculares Bluetooth Tws Earbuds Para Samsung Huawei Sony",
+    "price" : 3300,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_939435-MLA48138841444_112021-F.webp",
+    "id": 4
+    },
+    {
+    "title": "Apple AirPods Pro - Blanco",
+    "price" : 3400,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_798525-MLA46180356947_052021-F.webp",
+    "id": 5
+    },
+    {
+    "title": "Auriculares in-ear inalámbricos JBL Tune 225TWS black",
+    "price" : 4000,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_771784-MLA46222272082_052021-F.webp",
+    "id": 6
+    },
+    {
+    "title": "Auriculares in-ear inalámbricos Soundpeats TrueFree 2 negro",
+    "price" : 2900,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_618305-MLA46705819840_072021-F.webp",
+    "id": 7
+    },
+    {
+    "title": "Auriculares in-ear gamer inalámbricos Soundpeats TrueAir 2 black",
+    "price" : 1000,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_772388-MLA45642234664_042021-F.webp",
+    "id": 8
+    },
+    {
+    "title": "Auriculares in-ear gamer inalámbricos Soundpeats TrueAir 4 black",
+    "price" : 3456,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_772388-MLA45642234664_042021-F.webp",
+    "id": 9
+    },
+    {
+    "title": "Auriculares in-ear inalámbricos Sony WF-1000XM4 negro",
+    "price" : 2312,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_983978-MLA48023382073_102021-F.webp",
+    "id": 10
+    },
+    ])
+
+// Agrego mensajes a la coleccion mensajes
+db.mensajes.insertMany([
+    {
+    "email": "ezequiel@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    },
+    {
+    "email": "felipe@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    },
+    {
+    "email": "nora@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    },
+    {
+    "email": "ana@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    },
+    {
+    "email": "salvador@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    },
+    {
+    "email": "german@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    },
+    {
+    "email": "jeff@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    },
+    {
+    "email": "rosa@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    },
+    {
+    "email": "christhian@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    },
+    {
+    "email": "carlos@gmail.com",
+    "message": "Hola!",
+    "date": ISODate()
+    }
+]);
+
+// Confirmo que se hayan cargado los mensajes y los productos
+db.productos.find()
+db.mensajes.find()
+
+// Muestro la cantidad de productos en cada conexión
+db.mensajes.estimatedDocumentCount();
+db.productos.estimatedDocumentCount();
+
+//// Realizo un CRUD sobre la colección de productos:
+// Agrego un producto mas a la colección de productos
+
+db.productos.insertOne(
+    {
+    "title": "Auriculares Vincha Panasonic Rp-ht21. Nuevos.",
+    "price" : 4000,
+    "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_2X_871632-MLA43515165211_092020-F.webp",
+    "id": 11
+    },
+  );
+
+// Listo los productos con precio menor a 1000
+db.productos.find({"price": {$lt: 1000}});
+
+// Listo los productos con precio entre 1000 y 3000
+db.productos.find({"price": {$gt: 1000, $lt:3000}});
+
+// Listo los productos con precio mayor a 3000
+db.productos.find({"price": {$gt: 3000}})
+
+// Realizo una consulta que traiga solo el nombre del tercer producto mas barato
+db.productos.find({},{"name":1}).sort({"price":1}).skip(2).limit(1);
+
+// Hacer una actualizacion sobre todos los productos, agregando el campo stock a todos ellos con un valor de 100
+db.productos.updateMany({},{$set: {"stock": 100}});
+
+// Cambiar el stocj a cero de los productos con precios mayores a 4000
+db.productos.updateMany({"price": {$gt: 4000}},{$set: {"stock": 0}});
+
+// Borrar todos los productos con precio menos a 1000
+db.productos.deleteMany({"price": {$lt: 1000}});
+
+// Crear un usuario: "pepe" clave: "asd456" que solo pueda leer la base datos ecommerce.
+db.createUser( {
+    user: "pepe",
+    pwd: "asd456",
+    roles: [
+      { role: "read", db: "ecommerce" }
+    ]
+  }
+)
